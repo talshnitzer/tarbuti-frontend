@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import AppRouter from './routers/AppRouters'
+
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { heIL } from '@material-ui/core/locale';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+  },
+}, heIL);
+
+const App = () => {return (
+  <ThemeProvider theme={theme}>
+    <AppRouter />
+  </ThemeProvider>
+)}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App/>,
   document.getElementById('root')
 );
 
