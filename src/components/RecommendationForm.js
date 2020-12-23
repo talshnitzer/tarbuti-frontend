@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 
-import RecommendationsContext from '../context/recommendations-context'
+
 import {scope, holiday, audience, outInDoors} from '../services/tags-lists'
 
 

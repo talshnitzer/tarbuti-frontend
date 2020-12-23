@@ -5,6 +5,7 @@ import RecommendationDashboardPage from '../components/RecommendationDashboardPa
 import EditRecommendationPage from '../components/EditRecommendationPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
+import SignUpPage from '../components/SignUpPage'
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -30,6 +31,7 @@ const AppRouter = ()  => (
                 </Route>
 */}
                  <PublicRoute path="/" component={LoginPage} isAuthenticated={false} exact={true} ></PublicRoute>
+                 <PublicRoute path="/signUp" component={SignUpPage} isAuthenticated={false} exact={true} ></PublicRoute>
                  <PrivateRoute path="/dashboard" component={RecommendationDashboardPage} isAuthenticated={true} exact={true}></PrivateRoute>
                  <PrivateRoute path="/create" component={AddRecommendationPage} isAuthenticated={true}></PrivateRoute>
                  <PrivateRoute path="/edit/:id" component={EditRecommendationPage} isAuthenticated={true} ></PrivateRoute>

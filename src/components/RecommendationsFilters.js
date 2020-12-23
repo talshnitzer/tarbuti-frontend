@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,9 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
 
-import filtersReducer from '../reducers/filtersReducer'
 import FiltersContext from '../context/filters-context'
 import {scope, holiday, audience, outInDoors} from '../services/tags-lists'
 
@@ -23,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RecommendationsFilters = () => {
     
-    //  const initialState = {tags1: [],tags2: [],tags3: [],tags4: [],sortBy: 'date'};
-    //  const [filters, dispatch] = useReducer(filtersReducer, initialState)
     const {filters,filtersDispatch} = useContext(FiltersContext)
     console.log('RecommendationsFilters--- filters',filters);
     const classes = useStyles();
@@ -59,6 +55,26 @@ const RecommendationsFilters = () => {
             </FormControl>
 
             <FormControl className={classes.formControl}>
+                <InputLabel id="audience-filter">קהל יעד</InputLabel>
+                <Select
+                    labelId="audience-filter"
+                    id="audience-filter"
+                    multiple
+                    value={filters.tags2}
+                    onChange={e=> handleChange(e, 'SET_TAGS2')}
+                    input={<Input />}
+                    renderValue={(selected) => selected.join(', ')}
+                >
+                    {audience.map((audienceItem) => (
+                    <MenuItem key={audienceItem.value} value={audienceItem.value}>
+                        <Checkbox checked={filters.tags2.indexOf(audienceItem.value) > -1} />
+                        <ListItemText primary={audienceItem.label} />
+                    </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
                 <InputLabel id="holiday-filter">חג</InputLabel>
                 <Select
                     labelId="holiday-filter"
@@ -73,6 +89,26 @@ const RecommendationsFilters = () => {
                     <MenuItem key={holidayItem.value} value={holidayItem.value}>
                         <Checkbox checked={filters.tags3.indexOf(holidayItem.value) > -1} />
                         <ListItemText primary={holidayItem.label} />
+                    </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+                <InputLabel id="outdoor-filter">בפנים או בחוץ</InputLabel>
+                <Select
+                    labelId="outdoor-filter"
+                    id="outdoor-filter"
+                    multiple
+                    value={filters.tags4}
+                    onChange={e=> handleChange(e, 'SET_TAGS4')}
+                    input={<Input />}
+                    renderValue={(selected) => selected.join(', ')}
+                >
+                    {outInDoors.map((outInDoorsItem) => (
+                    <MenuItem key={outInDoorsItem.value} value={outInDoorsItem.value}>
+                        <Checkbox checked={filters.tags4.indexOf(outInDoorsItem.value) > -1} />
+                        <ListItemText primary={outInDoorsItem.label} />
                     </MenuItem>
                     ))}
                 </Select>

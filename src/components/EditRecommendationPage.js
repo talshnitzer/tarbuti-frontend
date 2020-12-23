@@ -1,5 +1,5 @@
-import React, {useReducer, useEffect, useContext} from 'react'
-import { Link, useParams, useHistory} from 'react-router-dom';
+import React, {useReducer, useEffect} from 'react'
+import { useParams, useHistory} from 'react-router-dom';
 
 import recommendationsReducer from '../reducers/recommendations'
 import RecommendationForm from './RecommendationForm'
@@ -45,24 +45,28 @@ const EditRecommendationPage = () => {
         return body    
         }
 
+        useEffect( () => {
+          async function fetchData() {
+              const response = await sendGetReq();
+              console.log('RecommendationDashboardPage--- response from sendGetReq', response);
+              if (response.length >0) {
+                  dispatch({type: 'POPULATES_RECOMMENDATIONS' ,recommendations: response})
+              }
+            }
+            fetchData();
+      },[])
 
-    useEffect(() => {
-      const recommendationsData = JSON.parse(localStorage.getItem('recommendations'))
-      if (recommendationsData) {
-        dispatch({type: 'POPULATES_RECOMMENDATIONS' ,recommendations: recommendationsData})
-      }},[])
+      const sendGetReq = async () => {
+        const response = await superagent.get(`${baseUrl}/recommendation/all`)
+        .set('Content-Type', 'application/json')
+        const {body} = response
+        console.log('RecommendationDashboardPage---sendGetReq--- body from res.body', body);
+        return body    
+        }
 
-    useEffect(()=> {
-        localStorage.setItem('recommendations', JSON.stringify(recommendations))
-        console.log('set item to local storage', recommendations);
-      },[recommendations])
-  
     return (
       <RecommendationsContext.Provider value={ { recommendation,  dispatch }}>
         <CssBaseline/>
-          <Container maxWidth="md" component="main">
-            <Link  to="/dashboard">מסך הבית</Link>
-          </Container>
           <Container maxWidth="md" component="main" >
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               עריכת ההמלצה שלי
