@@ -1,4 +1,10 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import sendPostReq from '../services/api.service'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -44,8 +50,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required')
+});
+
 const SignUp = () =>{
   const classes = useStyles();
+  const history = useHistory()
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      firstName: '',
+      lastName: '',
+      community: '',
+      phoneNum: ''
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+        const response = await sendPostReq(values,'/user/create');
+        console.log('SignUp---onSubmit---response from server',response);
+        
+        history.push('/')
+    }
+  });
+
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,18 +96,22 @@ const SignUp = () =>{
         <Typography className={classes.form}>
         עם האישור תשלח הסיסמא לכתובת האימייל שתירשם בטופס ההרשמה למטה
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
                 label="שם פרטי"
                 autoFocus
+                name="firstName"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -86,6 +123,10 @@ const SignUp = () =>{
                 label="שם משפחה"
                 name="lastName"
                 autoComplete="lname"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName}                
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,6 +138,10 @@ const SignUp = () =>{
                 label="כתובת אימייל"
                 name="email"
                 autoComplete="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}   
               />
             </Grid>
             <Grid item xs={12}>
@@ -109,6 +154,10 @@ const SignUp = () =>{
                 type="community"
                 id="community"
                 autoComplete="community"
+                value={formik.values.community}
+                onChange={formik.handleChange}
+                error={formik.touched.community && Boolean(formik.errors.community)}
+                helperText={formik.touched.community && formik.errors.community}                 
               />
             </Grid>
             <Grid item xs={12}>
@@ -120,6 +169,10 @@ const SignUp = () =>{
                 type="phoneNum"
                 id="phoneNum"
                 autoComplete="phoneNum"
+                value={formik.values.phoneNum}
+                onChange={formik.handleChange}
+                error={formik.touched.phoneNum && Boolean(formik.errors.phoneNum)}
+                helperText={formik.touched.phoneNum && formik.errors.phoneNum}                   
               />
             </Grid>
           </Grid>

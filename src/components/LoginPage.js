@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import {useHistory} from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import sendPostReq from '../services/api.service'
+import UsersContext from '../context/users-context'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,8 +53,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validationSchema = yup.object({
+    email: yup
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+    password: yup
+      .string('Enter your password')
+      .required('Password is required'),
+  });
+
 const LoginPage = () => {
   const classes = useStyles();
+  const {dispatch} = useContext(UsersContext)
+  const history = useHistory()
+
+  const formik = useFormik({
+    initialValues: {
+      email: 'foobar@example.com',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+        const response = await sendPostReq(values,'/user/login');
+        console.log('LoginPage---onSubmit---response from server',response);
+        //const user = {id: response.body.userDetails._id, token: response.header['x-auth']}
+        const user = {...response.body.userDetails,token: response.header['x-auth']}
+        console.log('LoginPage---onSubmit---user', user);
+        dispatch({ 
+            type: 'POPULATES_USER',
+            user
+        })
+        localStorage.setItem('user', JSON.stringify(user));
+        history.push('/dashboard')
+    },
+  });
+
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,7 +101,7 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5">
           התחברות
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -68,6 +110,10 @@ const LoginPage = () => {
             id="email"
             label="Email Address"
             name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
             autoComplete="email"
             autoFocus
           />
@@ -81,6 +127,10 @@ const LoginPage = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

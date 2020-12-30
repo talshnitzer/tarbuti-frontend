@@ -8,33 +8,18 @@ import LoginPage from '../components/LoginPage';
 import SignUpPage from '../components/SignUpPage'
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import AdminPage from '../components/AdminPage'
 
 const AppRouter = ()  => ( 
     <Router>
         <div>
             <Switch>
-            {/*
-                <Route exact={true} path="/">
-                    <LoginPage />
-                </Route>
-                <Route exact={true} path="/dashboard">
-                    <RecommendationDashboardPage />
-                </Route>
-                <Route exact={true} path="/create">
-                    <AddRecommendationPage />
-                </Route>
-                <Route exact={true} path="/edit/:id">
-                    <EditRecommendationPage />
-                </Route>
-                <Route path="*">
-                    <NotFoundPage />
-                </Route>
-*/}
-                 <PublicRoute path="/" component={LoginPage} isAuthenticated={false} exact={true} ></PublicRoute>
-                 <PublicRoute path="/signUp" component={SignUpPage} isAuthenticated={false} exact={true} ></PublicRoute>
-                 <PrivateRoute path="/dashboard" component={RecommendationDashboardPage} isAuthenticated={true} exact={true}></PrivateRoute>
-                 <PrivateRoute path="/create" component={AddRecommendationPage} isAuthenticated={true}></PrivateRoute>
-                 <PrivateRoute path="/edit/:id" component={EditRecommendationPage} isAuthenticated={true} ></PrivateRoute>
+                 <PublicRoute path="/" component={LoginPage}  exact={true} ></PublicRoute>
+                 <PublicRoute path="/signUp" component={SignUpPage}  exact={true} ></PublicRoute>
+                 <PrivateRoute path="/admin" component={AdminPage}  exact={true}></PrivateRoute>
+                 <PublicRoute path="/dashboard" component={RecommendationDashboardPage}  exact={true}></PublicRoute>
+                 <PrivateRoute path="/create" component={AddRecommendationPage} ></PrivateRoute>
+                 <PrivateRoute path="/edit/:id" component={EditRecommendationPage} ></PrivateRoute>
                  <Route component={NotFoundPage}></Route>/
                 
             </Switch>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Link, useHistory} from 'react-router-dom';
+
+import UsersContext from '../context/users-context'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const history = useHistory()
+  const {user} = useContext(UsersContext)
+  const isAdmin = user.userType === 'admin'
   
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -74,6 +78,12 @@ const Header = () => {
         <MenuItem onClick={handleClose}>
             <Link  to="/dashboard">דף הבית</Link>
         </MenuItem>
+        {isAdmin ? (
+        <MenuItem onClick={handleClose}>
+            <Link  to="/admin">ניהול משתמשים</Link>
+        </MenuItem>
+        ) : ('')
+      }
       </Menu>
     </div>
     </div>

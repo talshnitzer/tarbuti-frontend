@@ -6,11 +6,17 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import RecommendationsContext from '../context/recommendations-context'
+import UsersContext from '../context/users-context'
 
 
 const RecommendationListItem = ({ recommendation }) => {
     const { dispatch } = useContext(RecommendationsContext)
     console.log('RecommendationListItem recommendation:---', recommendation);
+    const {user} = useContext(UsersContext)
+    const isUserRecommendation = recommendation._creatorId._id === user._id
+    console.log('RecommendationListItem---user._id', user._id);
+    console.log('RecommendationListItem---recommendation._creatorId._id', recommendation._creatorId._id);
+    console.log('RecommendationListItem---isUserRecommendation', isUserRecommendation);
     const useStyles = makeStyles((theme) => ({
       root: {
         flexGrow: 1,
