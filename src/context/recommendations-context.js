@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const RecommendationsContext = React.createContext()
+const RecommendationsContext = React.createContext();
 
-export { RecommendationsContext as default }
+export { RecommendationsContext as default };

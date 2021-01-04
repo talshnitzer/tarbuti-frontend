@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const FiltersContext = React.createContext()
+const FiltersContext = React.createContext();
 
-export { FiltersContext as default }
+export { FiltersContext as default };

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const LoadingPage = () => (
-<div className="loader">
+  <div className="loader">
     <img className="loader__image" src="/loader.gif" />
-</div>
+  </div>
 );
 
 export default LoadingPage;

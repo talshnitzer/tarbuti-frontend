@@ -1,31 +1,31 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-import sendPostReq from '../services/api.service'
+import sendPostReq from "../services/api.service";
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         tarbuti
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -33,16 +33,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -52,33 +52,31 @@ const useStyles = makeStyles((theme) => ({
 
 const validationSchema = yup.object({
   email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required')
+    .string("Enter your email")
+    .email("Enter a valid email")
+    .required("Email is required"),
 });
 
-const SignUp = () =>{
+const SignUp = () => {
   const classes = useStyles();
-  const history = useHistory()
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      community: '',
-      phoneNum: ''
+      email: "",
+      firstName: "",
+      lastName: "",
+      community: "",
+      phoneNum: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-        const response = await sendPostReq(values,'/user/create');
-        console.log('SignUp---onSubmit---response from server',response);
-        
-        history.push('/')
-    }
-  });
+      const response = await sendPostReq(values, "/user/create");
+      console.log("SignUp---onSubmit---response from server", response);
 
-  
+      history.push("/");
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,7 +92,7 @@ const SignUp = () =>{
           ההרשמה מותנית באישור מנהלת.
         </Typography>
         <Typography className={classes.form}>
-        עם האישור תשלח הסיסמא לכתובת האימייל שתירשם בטופס ההרשמה למטה
+          עם האישור תשלח הסיסמא לכתובת האימייל שתירשם בטופס ההרשמה למטה
         </Typography>
         <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -110,7 +108,9 @@ const SignUp = () =>{
                 name="firstName"
                 value={formik.values.firstName}
                 onChange={formik.handleChange}
-                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
                 helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
@@ -125,8 +125,10 @@ const SignUp = () =>{
                 autoComplete="lname"
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
-                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-                helperText={formik.touched.lastName && formik.errors.lastName}                
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -141,7 +143,7 @@ const SignUp = () =>{
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}   
+                helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -156,8 +158,10 @@ const SignUp = () =>{
                 autoComplete="community"
                 value={formik.values.community}
                 onChange={formik.handleChange}
-                error={formik.touched.community && Boolean(formik.errors.community)}
-                helperText={formik.touched.community && formik.errors.community}                 
+                error={
+                  formik.touched.community && Boolean(formik.errors.community)
+                }
+                helperText={formik.touched.community && formik.errors.community}
               />
             </Grid>
             <Grid item xs={12}>
@@ -171,8 +175,10 @@ const SignUp = () =>{
                 autoComplete="phoneNum"
                 value={formik.values.phoneNum}
                 onChange={formik.handleChange}
-                error={formik.touched.phoneNum && Boolean(formik.errors.phoneNum)}
-                helperText={formik.touched.phoneNum && formik.errors.phoneNum}                   
+                error={
+                  formik.touched.phoneNum && Boolean(formik.errors.phoneNum)
+                }
+                helperText={formik.touched.phoneNum && formik.errors.phoneNum}
               />
             </Grid>
           </Grid>
@@ -199,6 +205,6 @@ const SignUp = () =>{
       </Box>
     </Container>
   );
-}
+};
 
-export {SignUp as default}
+export { SignUp as default };
