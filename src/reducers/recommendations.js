@@ -4,7 +4,7 @@ const recommendationsReducer = (state, action) => {
       console.log("recommendationsReducer POPULATES_RECOMMENDATIONS--- enter");
       return action.recommendations;
     case "ADD_RECOMMENDATIONS":
-      console.log("recommendationsReducer ADD_RECOMMENDATIONS--- enter");
+      console.log("recommendationsReducer ADD_RECOMMENDATIONS--- enter action.recommendation", action.recommendation);
       return [...state, { ...action.recommendation }];
     case "UPDATE_RECOMMENDATIONS":
       console.log("recommendationsReducer UPDATE_RECOMMENDATIONS--- enter");

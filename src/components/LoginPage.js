@@ -63,7 +63,7 @@ const validationSchema = yup.object({
 
 const LoginPage = () => {
   const classes = useStyles();
-  const { dispatch } = useContext(UsersContext);
+  const { dispatchUser } = useContext(UsersContext);
   const history = useHistory();
 
   const formik = useFormik({
@@ -80,7 +80,7 @@ const LoginPage = () => {
         token: response.header["x-auth"],
       };
       console.log("LoginPage---onSubmit---user", user);
-      dispatch({
+      dispatchUser({
         type: "POPULATES_USER",
         user,
       });

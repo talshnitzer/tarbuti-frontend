@@ -19,6 +19,7 @@ const sendAuthPostReq = async (token,values, path) => {
 }
 
 const sendAuthGetReq = async (token, path) => {
+  console.log('service - sendAuthGetReq path:', path);
   const response = await superagent.get(`${baseUrl}${path}`)
     .set('Content-Type', 'application/json')
     .set('x-auth',token)

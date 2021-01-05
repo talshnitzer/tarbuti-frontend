@@ -1,7 +1,5 @@
-import React, { useReducer, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-
-import recommendationsReducer from "../reducers/recommendations";
 import RecommendationForm from "./RecommendationForm";
 import RecommendationsContext from "../context/recommendations-context";
 import UsersContext from "../context/users-context";
@@ -13,26 +11,26 @@ import Typography from "@material-ui/core/Typography";
 
 const AddRecommendationPage = () => {
   const history = useHistory();
-  const [, dispatch] = useReducer(recommendationsReducer, []); //the useReducer returns an array with my state and a dispatch function
+  const { dispatch } = useContext(RecommendationsContext);
   const { user } = useContext(UsersContext);
   const token = user.token;
 
   const myOnSubmit = async (values) => {
     console.log("RecommendationForm-----values token", values, token);
-    const responseBody = await sendAuthPostReq(
+    const response = await sendAuthPostReq(
       token,
       values,
       "/recommendation/create"
     );
     console.log(
-      "RecommendationForm-----myOnSubmit---responseBody after await",
-      responseBody
+      "RecommendationForm-----myOnSubmit---response.body after await",
+      response.body
     );
-    const recommendation = { ...responseBody };
+    const recommendation = { ...response.body };
     delete recommendation.__v;
     dispatch({
       type: "ADD_RECOMMENDATIONS",
-      recommendation,
+      recommendation
     });
     history.push("/dashboard");
   };

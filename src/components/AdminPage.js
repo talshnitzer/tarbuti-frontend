@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 
-import { sendAuthPostReq, sendGetReq } from "../services/api.service";
+import { sendAuthPostReq, sendAuthGetReq } from "../services/api.service";
 import UsersContext from "../context/users-context";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,8 +29,8 @@ const AdminPage = () => {
   const token = user.token;
   useEffect(() => {
     async function fetchUsers() {
-      const response = await sendGetReq(token, "/user/all");
-      console.log("AdminPage--- response from sendGetReq", response);
+      const response = await sendAuthGetReq(token, "/user/all");
+      console.log("AdminPage--- response from sendAuthGetReq", response);
       setUsers(response.body);
     }
     fetchUsers();
