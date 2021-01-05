@@ -1,27 +1,22 @@
-import React, { useReducer, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import recommendationsReducer from "../reducers/recommendations";
 import RecommendationForm from "./RecommendationForm";
 import RecommendationsContext from "../context/recommendations-context";
 import UsersContext from "../context/users-context";
-import { sendAuthPostReq, sendGetReq } from "../services/api.service";
+import { sendAuthPostReq } from "../services/api.service";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 
-const superagent = require("superagent");
-
-const baseUrl = process.env.API_URL || "http://localhost:8080";
-
 const EditRecommendationPage = () => {
   const { user } = useContext(UsersContext);
+  const { recommendations, dispatch } = useContext(RecommendationsContext);
   const token = user.token;
   const history = useHistory();
-
   const { id } = useParams();
-  const [recommendations, dispatch] = useReducer(recommendationsReducer, []); //the useReducer returns an array with my state and a dispatch function
+
   console.log(
     "EditRecommendationPage---recommendations array: ",
     recommendations
@@ -35,16 +30,16 @@ const EditRecommendationPage = () => {
 
   const myOnSubmit = async (values) => {
     console.log("EditRecommendationPage-----values", values);
-    const responseBody = await sendAuthPostReq(
+    const response = await sendAuthPostReq(
       token,
       values,
       `/recommendation/update/${id}`
     );
     console.log(
       "EditRecommendationPage-----myOnSubmit---responseBody after await",
-      responseBody
+      response.body
     );
-    const recommendation = { ...responseBody };
+    const recommendation = { ...response.body };
     delete recommendation.__v;
     dispatch({
       type: "UPDATE_RECOMMENDATIONS",
@@ -52,23 +47,6 @@ const EditRecommendationPage = () => {
     });
     history.push("/dashboard");
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await sendGetReq(token);
-      console.log(
-        "RecommendationDashboardPage--- response from sendGetReq",
-        response
-      );
-      if (response.length > 0) {
-        dispatch({
-          type: "POPULATES_RECOMMENDATIONS",
-          recommendations: response,
-        });
-      }
-    }
-    fetchData();
-  }, []);
 
   return (
     <RecommendationsContext.Provider value={{ recommendation, dispatch }}>

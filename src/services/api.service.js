@@ -18,11 +18,18 @@ const sendAuthPostReq = async (token,values, path) => {
   return response    
 }
 
-const sendGetReq = async (token, path) => {
+const sendAuthGetReq = async (token, path) => {
   const response = await superagent.get(`${baseUrl}${path}`)
     .set('Content-Type', 'application/json')
     .set('x-auth',token)
   return response    
 }
 
-  export {sendPostReq as default, sendGetReq, sendAuthPostReq}
+const sendGetReq = async (path) => {
+  console.log('service - sendGetReq path:', path);
+  const response = await superagent.get(`${baseUrl}${path}`)
+    .set('Content-Type', 'application/json')
+  return response    
+}
+
+  export {sendPostReq as default, sendGetReq, sendAuthPostReq, sendAuthGetReq}
