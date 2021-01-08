@@ -32,7 +32,7 @@ const AddRecommendationPage = () => {
       type: "ADD_RECOMMENDATIONS",
       recommendation
     });
-    history.push("/dashboard");
+    history.push("/");
   };
 
   return (

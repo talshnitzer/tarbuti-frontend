@@ -85,7 +85,7 @@ const LoginPage = () => {
         user,
       });
       localStorage.setItem("user", JSON.stringify(user));
-      history.push("/dashboard");
+      history.push("/");
     },
   });
 

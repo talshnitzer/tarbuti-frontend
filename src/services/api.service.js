@@ -1,7 +1,8 @@
 
 const superagent = require('superagent');
 
-const baseUrl = process.env.API_URL || 'http://localhost:8080'
+//const baseUrl = process.env.API_URL || 'http://localhost:8080'
+const baseUrl = ''
 
 const sendPostReq = async (values, path) => {
     const response = await superagent.post(`${baseUrl}${path}`)

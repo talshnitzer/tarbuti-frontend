@@ -45,7 +45,7 @@ const EditRecommendationPage = () => {
       type: "UPDATE_RECOMMENDATIONS",
       recommendation,
     });
-    history.push("/dashboard");
+    history.push("/");
   };
 
   return (
