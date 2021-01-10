@@ -5,7 +5,7 @@ import UsersContext from "../context/users-context";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user } = useContext(UsersContext);
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!user.token;
   console.log("PrivateRoute---isAuthenticated", isAuthenticated);
   console.log("PrivateRoute---user", user);
   const { path } = { ...rest };
