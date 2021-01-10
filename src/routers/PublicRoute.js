@@ -6,7 +6,7 @@ const PublicRoute = ({ component: Component, ...rest }) => {
   const { path } = { ...rest };
   return (
     <div>
-      {path === "/dashboard" ? <Header /> : ""}
+      {path === "/" ? <Header /> : ""}
       <Route {...rest} component={(props) => <Component {...props} />} />
     </div>
   );

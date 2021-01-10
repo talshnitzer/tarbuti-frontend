@@ -14,7 +14,7 @@ const AppRouter = () => (
   <Router>
     <div>
       <Switch>
-        <PublicRoute path="/" component={LoginPage} exact={true}></PublicRoute>
+        <PublicRoute path="/login" component={LoginPage} exact={true}></PublicRoute>
         <PublicRoute
           path="/signUp"
           component={SignUpPage}
@@ -26,7 +26,7 @@ const AppRouter = () => (
           exact={true}
         ></PrivateRoute>
         <PublicRoute
-          path="/dashboard"
+          path="/"
           component={RecommendationDashboardPage}
           exact={true}
         ></PublicRoute>

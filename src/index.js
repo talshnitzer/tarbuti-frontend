@@ -31,10 +31,8 @@ const App = () => {
   const [recommendations, dispatch] = useReducer(recommendationsReducer, []);
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData) {
-      dispatchUser({ type: "POPULATES_USER", user: userData });
-    }
+    const userData = JSON.parse(localStorage.getItem("user")) || {};
+    dispatchUser({ type: "POPULATES_USER", user: userData });
     userGet = true;
     console.log("App---useEffect userGet", userGet);
   }, []);

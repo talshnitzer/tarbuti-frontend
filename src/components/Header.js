@@ -43,7 +43,7 @@ const Header = () => {
   };
 
   const handleLoginClick = () => {
-    history.push("/");
+    history.push("/login");
   };
 
   const handleSignUpClick = () => {
@@ -86,7 +86,7 @@ const Header = () => {
             <Link to="/create">הוסף המלצה</Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Link to="/dashboard">דף הבית</Link>
+            <Link to="/">דף הבית</Link>
           </MenuItem>
           {isAdmin ? (
             <MenuItem onClick={handleClose}>

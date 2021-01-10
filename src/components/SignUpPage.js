@@ -74,7 +74,7 @@ const SignUp = () => {
       const response = await sendPostReq(values, "/user/create");
       console.log("SignUp---onSubmit---response from server", response);
 
-      history.push("/");
+      history.push("/login");
     },
   });
 
