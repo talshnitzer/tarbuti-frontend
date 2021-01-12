@@ -1,3 +1,4 @@
+// P.Z: Please rename this file to recommendationsReducer like the rest of them
 const recommendationsReducer = (state, action) => {
   switch (action.type) {
     case "POPULATES_RECOMMENDATIONS":

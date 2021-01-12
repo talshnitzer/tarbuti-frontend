@@ -68,6 +68,7 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
+      // P.Z I think it's best to leave it empty by default.
       email: "foobar@example.com",
       password: "",
     },

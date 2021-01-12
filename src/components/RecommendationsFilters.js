@@ -10,6 +10,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import FiltersContext from "../context/filters-context";
 import { scope, holiday, audience, outInDoors } from "../services/tags-lists";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,8 +35,10 @@ const RecommendationsFilters = () => {
 
   return (
     <div>
+
       <FormControl className={classes.formControl}>
         <InputLabel id="scope-filter">תחום</InputLabel>
+        {/* P.Z: Please see my comment on SignUpPage:99 */}
         <Select
           labelId="scope-filter"
           id="scope-filter"

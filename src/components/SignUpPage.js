@@ -96,6 +96,31 @@ const SignUp = () => {
         </Typography>
         <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
+            {/* P.Z: This is a tricky one. It's recommended not to copy code.
+                     Although it looks like there is a difference it would be nicer to have a list of fields and a
+                      generating function.
+                     That would generate the same code and if you had to make a change, you could change it only in one place.
+                     For example: const fields = [{id: "firstName", label: "שם פרטי", isRequired: true},
+                      {id: "lastName", label: "שם משפחה", isRequired: true}]
+                      fields.map((field, index) => <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete={field.id}
+                variant="outlined"
+                required={field.isRequired}
+                fullWidth
+                id={field.id}
+                label={field.label}
+                autoFocus={index === 0}
+                name={field.id}
+                value={formik.values[field.id]}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched[field.id] && Boolean(formik.errors[field.id])
+                }
+                helperText={formik.touched.[field.id] && formik.errors[field.id]}
+              />
+            </Grid>
+            */}
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"

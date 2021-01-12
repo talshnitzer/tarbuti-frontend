@@ -11,6 +11,8 @@ import filtersReducer from "../reducers/filtersReducer";
 
 const RecommendationDashboardPage = () => {
   const initialState = {
+    // P.Z: I would prefer to use more specific name than tagsX.
+    // when you want to add an index to the variable name, ask yourself why can't it be an array.
     tags1: [],
     tags2: [],
     tags3: [],
@@ -35,6 +37,7 @@ const RecommendationDashboardPage = () => {
         <Grid container spacing={4}>
           <RecommendationsFilters />
         </Grid>
+        {/* P.Z: It's better to use CSS for that */}
         <br />
         <br />
         <Grid container spacing={2}>
