@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -16,6 +16,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Alert from "@material-ui/lab/Alert";
 
 function Copyright() {
   return (
@@ -60,6 +61,7 @@ const validationSchema = yup.object({
 const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [error, setError] = useState(undefined);
 
   const formik = useFormik({
     initialValues: {
@@ -73,8 +75,11 @@ const SignUp = () => {
     onSubmit: async (values) => {
       const response = await sendPostReq(values, "/user/create");
       console.log("SignUp---onSubmit---response from server", response);
-
-      history.push("/login");
+      if (response.body.error) {
+        setError(`${response.body.error}`);
+      } else {
+        history.push("/login");
+      }
     },
   });
 
@@ -182,6 +187,14 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
+          {error ? (
+            <Grid className={classes.form}>
+              <Alert variant="outlined" severity="error">
+                {error}
+              </Alert>
+            </Grid>
+          ) : null}
+
           <Button
             type="submit"
             fullWidth
@@ -200,6 +213,7 @@ const SignUp = () => {
           </Grid>
         </form>
       </div>
+
       <Box mt={5}>
         <Copyright />
       </Box>

@@ -50,12 +50,12 @@ const RecommendationListItem = ({ recommendation }) => {
   const history = useHistory();
   console.log("RecommendationListItem recommendation:---", recommendation);
   const { user } = useContext(UsersContext);
-  const isUserRecommendation = recommendation._creatorId._id === user._id;
-  console.log("RecommendationListItem---user._id", user._id);
-  console.log(
-    "RecommendationListItem---recommendation._creatorId._id",
-    recommendation._creatorId._id
-  );
+  const isUserRecommendation = (user && recommendation._creatorId) ? (recommendation._creatorId._id === user._id) : false;
+  console.log("RecommendationListItem---user", user);
+  // console.log(
+  //   "RecommendationListItem---recommendation._creatorId._id",
+  //   recommendation._creatorId._id
+  // );
   console.log(
     "RecommendationListItem---isUserRecommendation",
     isUserRecommendation
@@ -137,11 +137,11 @@ const RecommendationListItem = ({ recommendation }) => {
               אימייל הספק: {recommendation.providerEmail}
             </Typography>
             <Typography gutterBottom variant="subtitle1">
-              הומלץ ע״י: {recommendation._creatorId.firstName}{" "}
-              {recommendation._creatorId.lastName}
+              הומלץ ע״י: {recommendation._creatorId ? recommendation._creatorId.firstName : 'unknown'}{" "}
+              {recommendation._creatorId ? recommendation._creatorId.lastName : 'unknown'}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              מהיישוב: {recommendation._creatorId.community}
+              מהיישוב: {recommendation._creatorId ? recommendation._creatorId.community: 'unknown'}
             </Typography>
           </CardContent>
         </Collapse>
