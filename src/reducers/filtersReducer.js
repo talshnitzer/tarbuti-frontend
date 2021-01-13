@@ -1,5 +1,7 @@
 const filtersReducer = (state, action) => {
   switch (action.type) {
+    // P.Z: Please read my comment on index.js:38. It's highly recommended to create an "actions" dir with
+      // filtersActions, recommendationsActions and usersActions.
     case "SET_TAGS1":
       return { ...state, tags1: action.filters };
     case "SET_TAGS2":

@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AdminPage from "../components/AdminPage";
 
+// P.Z: When the body of a tag is empty, it's usually prettier to use self-closing tags:
+// Instead of <PublicRoute></PublicRoute> use <PublicRoute/>
 const AppRouter = () => (
   <Router>
     <div>

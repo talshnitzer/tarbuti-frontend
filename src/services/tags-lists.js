@@ -1,3 +1,4 @@
+// P.Z: What is the difference between value and label.
 export const scope = [
     {
       value: 'מוזיקה',

@@ -21,6 +21,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <label htmlFor="serviceName">המלצה על</label>
+          {/* P.Z: Please see my comment on SignUpPage:99 */}
           <TextField
             fullWidth
             required
@@ -248,6 +249,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
             שמירה
           </Button>
         </Grid>
+        {/* P.Z: Try to use CSS here instead of an empty tag. */}
         <Grid item sm={6}></Grid>
         <Grid item xs={6} sm={3}>
           <Button

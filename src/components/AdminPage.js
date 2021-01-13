@@ -35,6 +35,8 @@ const AdminPage = () => {
   console.log("AdminPage---error", error);
   const token = user.token;
   useEffect(() => {
+    // P.Z: It's highly recommended to move all the API functions to one (or more) external service file called
+    // (I think "services" dir is the right place).
     async function fetchUsers() {
       const response = await sendAuthGetReq(token, "/user/all");
       console.log("AdminPage--- response from sendAuthGetReq", response);
@@ -80,6 +82,7 @@ const AdminPage = () => {
       <Table className={classes.table} aria-label="admin table">
         <TableHead>
           <TableRow>
+            {/* P.Z: Same here. create a const with the names and values and generate the headers and body components using map */}
             <TableCell align="right">שם פרטי</TableCell>
             <TableCell align="right">שם משפחה</TableCell>
             <TableCell align="right">אימייל</TableCell>

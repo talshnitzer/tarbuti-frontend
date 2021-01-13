@@ -2,6 +2,8 @@ const superagent = require("superagent");
 
 const baseUrl = "";
 
+// P.Z: It'll be the best to use the content type as content
+// (or even the a setHeaders function that will set the headers in one place).
 const sendPostReq = async (values, path) => {
   let response = null;
   try {

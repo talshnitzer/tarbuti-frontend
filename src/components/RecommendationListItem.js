@@ -127,6 +127,8 @@ const RecommendationListItem = ({ recommendation }) => {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
+            {/* P.Z: A word about hebrew systems. As you noticed, it's pretty messy!
+            It's highly recommended to use a multilingual support solution like react-i18next or react-intl */}
             <Typography gutterBottom variant="subtitle1">
               תאריך רישום ההמלצה: {moment(recommendation.createdAt).format('DD/MM/YYYY')}
             </Typography>
