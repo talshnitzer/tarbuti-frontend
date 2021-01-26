@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -19,6 +19,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Copyright() {
   return (
@@ -65,29 +70,42 @@ const LoginPage = () => {
   const classes = useStyles();
   const { dispatchUser } = useContext(UsersContext);
   const history = useHistory();
+  const [error, setError] = useState(undefined);
 
   const formik = useFormik({
     initialValues: {
-      email: "foobar@example.com",
+      email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const response = await sendPostReq(values, "/user/login");
       console.log("LoginPage---onSubmit---response from server", response);
-      const user = {
-        ...response.body.userDetails,
-        token: response.header["x-auth"],
-      };
-      console.log("LoginPage---onSubmit---user", user);
-      dispatchUser({
-        type: "POPULATES_USER",
-        user,
-      });
-      localStorage.setItem("user", JSON.stringify(user));
-      history.push("/");
+      if (response.body.error) {
+        setError(`${response.body.error}`);
+        setOpen(true);
+      } else {
+        const user = {
+          ...response.body.userDetails,
+          token: response.header["x-auth"],
+        };
+        console.log("LoginPage---onSubmit---user", user);
+        dispatchUser({
+          type: "POPULATES_USER",
+          user,
+        });
+        localStorage.setItem("user", JSON.stringify(user));
+        history.push("/");
+      }
     },
   });
+
+  //handle error dialog box
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+    setError(null);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,7 +124,7 @@ const LoginPage = () => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="כתובת אימייל"
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
@@ -121,7 +139,7 @@ const LoginPage = () => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="סיסמא"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -143,6 +161,28 @@ const LoginPage = () => {
           >
             להתחברות נא ללחוץ
           </Button>
+          {error ? (
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"לא בוצעה התחברות "}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {error}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  לסגור הודעה
+                </Button>
+              </DialogActions>
+            </Dialog>
+          ) : null}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
