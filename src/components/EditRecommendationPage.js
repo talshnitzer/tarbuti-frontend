@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import RecommendationForm from "./RecommendationForm";
 import RecommendationsContext from "../context/recommendations-context";
 import UsersContext from "../context/users-context";
+import ErrorContext from "../context/error-context";
 import { sendAuthPostReq } from "../services/api.service";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,6 +17,7 @@ const EditRecommendationPage = () => {
   const token = user.token;
   const history = useHistory();
   const { id } = useParams();
+  const { handleOpenError } = useContext(ErrorContext);
 
   console.log(
     "EditRecommendationPage---recommendations array: ",
@@ -35,17 +37,21 @@ const EditRecommendationPage = () => {
       values,
       `/recommendation/update/${id}`
     );
-    console.log(
-      "EditRecommendationPage-----myOnSubmit---responseBody after await",
-      response.body
-    );
-    const recommendation = { ...response.body };
-    delete recommendation.__v;
-    dispatch({
-      type: "UPDATE_RECOMMENDATIONS",
-      recommendation,
-    });
-    history.push("/");
+    if (response.body.error) {
+      handleOpenError(response.body.error);
+    } else {
+      console.log(
+        "EditRecommendationPage-----myOnSubmit---responseBody after await",
+        response.body
+      );
+      const recommendation = { ...response.body };
+      delete recommendation.__v;
+      dispatch({
+        type: "UPDATE_RECOMMENDATIONS",
+        recommendation,
+      });
+      history.push("/");
+    }
   };
 
   return (

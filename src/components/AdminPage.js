@@ -2,6 +2,8 @@ import React, { useEffect, useContext } from "react";
 
 import { sendAuthPostReq, sendAuthGetReq } from "../services/api.service";
 import UsersContext from "../context/users-context";
+import ErrorContext from "../context/error-context";
+import ErrorDialog from "../components/ErrorDialog";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -14,11 +16,6 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles({
   table: {
@@ -29,10 +26,15 @@ const useStyles = makeStyles({
 const AdminPage = () => {
   const classes = useStyles();
   const [users, setUsers] = React.useState([]);
-  const [error, setError] = React.useState(null);
+
   const { user } = useContext(UsersContext);
   console.log("AdminPage---me", user);
   console.log("AdminPage---error", error);
+  //error handling
+  const { error, open, handleOpenError, handleCloseError } = useContext(
+    ErrorContext
+  );
+
   const token = user.token;
   useEffect(() => {
     async function fetchUsers() {
@@ -47,16 +49,19 @@ const AdminPage = () => {
   }, []);
 
   const handleApprove = async (userToApprove) => {
-    const response = await sendAuthPostReq(token, "", `/user/approve/${userToApprove._id}`);
-    console.log('AdminPage---handleApprove---response', response);
+    const response = await sendAuthPostReq(
+      token,
+      "",
+      `/user/approve/${userToApprove._id}`
+    );
+    console.log("AdminPage---handleApprove---response", response);
     if (response.body.error) {
-      console.log('AdminPage---handleApprove---if (response.body.error)', response.body.error);
-      setError(`${response.body.error}`);
-      setOpen(true);
+      handleOpenError(response.body.error);
     }
     console.log(
       "handleApprove---The user._id that you wish to edit and error",
-      userToApprove._id, error
+      userToApprove._id,
+      error
     );
   };
 
@@ -66,13 +71,6 @@ const AdminPage = () => {
 
   const handleDelete = (values) => {
     console.log("The Values that you wish to edit ", values);
-  };
-
-  //handle error dialog box
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-    setError(null);
   };
 
   return (
@@ -102,26 +100,11 @@ const AdminPage = () => {
               <TableCell align="right">{user.status}</TableCell>
               <TableCell align="right">
                 {error ? (
-                  <Dialog
+                  <ErrorDialog
                     open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">
-                      {"פעולת האישור לא בוצעה"}
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-description">
-                        {error}
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleClose} color="primary">
-                        לסגור הודעה
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
+                    handleCloseError={handleCloseError}
+                    error={error}
+                  />
                 ) : null}
 
                 <Button

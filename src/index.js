@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 
@@ -8,19 +8,11 @@ import usersReducer from "./reducers/usersReduder";
 import LoadingPage from "./components/LoadingPage";
 import RecommendationsContext from "./context/recommendations-context";
 import recommendationsReducer from "./reducers/recommendations";
+import ErrorContext from "./context/error-context";
 import { sendGetReq } from "./services/api.service";
+import { theme, RTL } from "./services/rtl.service";
 
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { heIL } from "@material-ui/core/locale";
-
-const theme = createMuiTheme(
-  {
-    palette: {
-      primary: { main: "#1976d2" },
-    },
-  },
-  heIL
-);
+import { ThemeProvider } from "@material-ui/core/styles";
 
 let userGet = false;
 //define the user state with useReducer.
@@ -29,6 +21,21 @@ const App = () => {
   const [user, dispatchUser] = useReducer(usersReducer, undefined);
   console.log("App--- user", user);
   const [recommendations, dispatch] = useReducer(recommendationsReducer, []);
+
+  const [error, setError] = useState(undefined);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpenError = (errorMsg) => {
+    console.log("handleOpenError (errorMsg)", errorMsg);
+    setError(`${errorMsg}`);
+    setOpen(true);
+  };
+
+  //handle error dialog box
+  const handleCloseError = () => {
+    setOpen(false);
+    setError(null);
+  };
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user")) || {};
@@ -58,13 +65,19 @@ const App = () => {
 
   if (userGet === true) {
     return (
-      <RecommendationsContext.Provider value={{ recommendations, dispatch }}>
-        <UsersContext.Provider value={{ user, dispatchUser }}>
-          <ThemeProvider theme={theme}>
-            <AppRouter />
-          </ThemeProvider>
-        </UsersContext.Provider>
-      </RecommendationsContext.Provider>
+      <RTL>
+        <RecommendationsContext.Provider value={{ recommendations, dispatch }}>
+          <UsersContext.Provider value={{ user, dispatchUser }}>
+            <ErrorContext.Provider
+              value={{ error, open, handleOpenError, handleCloseError }}
+            >
+              <ThemeProvider theme={theme}>
+                <AppRouter />
+              </ThemeProvider>
+            </ErrorContext.Provider>
+          </UsersContext.Provider>
+        </RecommendationsContext.Provider>
+      </RTL>
     );
   } else {
     return <LoadingPage />;

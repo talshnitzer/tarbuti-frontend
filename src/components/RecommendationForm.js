@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 
 import Button from "@material-ui/core/Button";
@@ -8,8 +8,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
 import { scope, holiday, audience, outInDoors } from "../services/tags-lists";
+import ErrorContext from "../context/error-context";
+import ErrorDialog from "../components/ErrorDialog";
 
 const RecommendationForm = ({ recommendation, myOnSubmit }) => {
+  const { error, open, handleCloseError } = useContext(ErrorContext);
+
   const formik = useFormik({
     initialValues: recommendation ? { ...recommendation } : initialValues,
     validate,
@@ -247,6 +251,13 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
           <Button color="primary" variant="contained" type="submit">
             שמירה
           </Button>
+          {error ? (
+            <ErrorDialog
+              open={open}
+              handleCloseError={handleCloseError}
+              error={error}
+            />
+          ) : null}
         </Grid>
         <Grid item sm={6}></Grid>
         <Grid item xs={6} sm={3}>
