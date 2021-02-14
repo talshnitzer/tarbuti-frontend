@@ -5,11 +5,25 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import RemmendationList from "../components/RecommendationList";
-import RecommendationsFilters from "../components/RecommendationsFilters";
+import RecommendationsFilters from "./RecommendationsFilters";
 import FiltersContext from "../context/filters-context";
 import filtersReducer from "../reducers/filtersReducer";
+import homeTitleBgImage from "../img/homeTitleBg.png";
+
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  title: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: `url(${homeTitleBgImage}) right no-repeat #69EAEF`,
+    height: "2.3em",
+  },
+});
 
 const RecommendationDashboardPage = () => {
+  const classes = useStyles();
   const initialState = {
     tags1: [],
     tags2: [],
@@ -22,23 +36,25 @@ const RecommendationDashboardPage = () => {
   return (
     <FiltersContext.Provider value={{ filters, filtersDispatch }}>
       <CssBaseline />
+      <Typography
+        variant="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+        className={classes.title}
+      >
+        המלצות ממארגני אירועי תרבות במשגב
+      </Typography>
       <Container maxWidth="md" component="main">
-        <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          המלצות ממארגני אירועי תרבות במשגב
-        </Typography>
-        <Grid container spacing={4}>
-          <RecommendationsFilters />
-        </Grid>
-        <br />
-        <br />
         <Grid container spacing={2}>
-          <RemmendationList />
+          <Grid item xs={3}>
+            <RecommendationsFilters />
+          </Grid>
+          <Grid item xs={9}>
+            <Grid container spacing={2}>
+              <RemmendationList />
+            </Grid>
+          </Grid>
         </Grid>
       </Container>
     </FiltersContext.Provider>

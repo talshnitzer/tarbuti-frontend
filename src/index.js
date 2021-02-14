@@ -10,7 +10,7 @@ import RecommendationsContext from "./context/recommendations-context";
 import recommendationsReducer from "./reducers/recommendations";
 import ErrorContext from "./context/error-context";
 import { sendGetReq } from "./services/api.service";
-import { theme, RTL } from "./services/rtl.service";
+import { theme, RTL } from "./services/theme.service";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 
