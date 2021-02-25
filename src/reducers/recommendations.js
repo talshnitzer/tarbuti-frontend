@@ -9,11 +9,6 @@ const recommendationsReducer = (state, action) => {
     case "UPDATE_RECOMMENDATIONS":
       console.log("recommendationsReducer UPDATE_RECOMMENDATIONS--- enter");
       return state.map((recommendation) => {
-        console.log(
-          "recommendationsReducer UPDATE_RECOMMENDATIONS--- enter map action.recommendation.recommendation._id",
-          recommendation._id,
-          action.recommendation._id
-        );
         if (recommendation._id === action.recommendation._id) {
           console.log("recommendationsReducer UPDATE_RECOMMENDATIONS--- match");
           return { ...action.recommendation };
