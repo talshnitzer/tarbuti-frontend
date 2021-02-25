@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Formik, FastField, Form } from "formik";
-import * as Yup from "yup";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -9,11 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
 import { scope, holiday, audience, outInDoors } from "../services/tags-lists";
-import ErrorContext from "../context/error-context";
-import ErrorDialog from "../components/ErrorDialog";
+
+
 
 const RecommendationForm = ({ recommendation, myOnSubmit }) => {
-  console.log("render form");
+  
   return (
     <Formik
       initialValues={recommendation ? { ...recommendation } : initialValues}
@@ -22,7 +21,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
     >
       {(formik) => (
         <Form>
-          {console.log("<Form>---formik", formik)}
+          
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <MyFastField
@@ -109,6 +108,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
             {
               tags.map((tag)=>(
                 <MyTagSelect
+                key={tag.name}
                 title={tag.title}
                 formik={formik}
                 name={tag.name}
@@ -166,7 +166,7 @@ const MyFastField = ({ title, name, helperText, rows, multiline }) => {
 };
 
 const MyTagSelect = ({ title, name, formik, options }) => {
-  console.log("MyTagSelect---formik.values[`$name`]", formik.values[`${name}`]);
+  
   return (
     <Grid item xs={12} sm={3}>
       <label htmlFor={name}>{title}</label>

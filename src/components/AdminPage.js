@@ -29,7 +29,7 @@ const AdminPage = () => {
 
   const { user } = useContext(UsersContext);
   console.log("AdminPage---me", user);
-  console.log("AdminPage---error", error);
+  
   //error handling
   const { error, open, handleOpenError, handleCloseError } = useContext(
     ErrorContext

@@ -19,15 +19,11 @@ const AddRecommendationPage = () => {
   const { handleOpenError } = useContext(ErrorContext);
 
   const myOnSubmit = async (values) => {
-    console.log("RecommendationForm-----values token", values, token);
+    
     const response = await sendAuthPostReq(
       token,
       values,
       "/recommendation/create"
-    );
-    console.log(
-      "RecommendationForm-----myOnSubmit---response.body after await",
-      response.body
     );
     if (response.body.error) {
       handleOpenError(response.body.error);

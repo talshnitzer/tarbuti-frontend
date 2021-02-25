@@ -18,11 +18,7 @@ const EditRecommendationPage = () => {
   const history = useHistory();
   const { id } = useParams();
   const { handleOpenError } = useContext(ErrorContext);
-
-  console.log(
-    "EditRecommendationPage---recommendations array: ",
-    recommendations
-  );
+ 
   const recommendation =
     recommendations !== undefined
       ? recommendations.find(
@@ -31,7 +27,6 @@ const EditRecommendationPage = () => {
       : {};
 
   const myOnSubmit = async (values) => {
-    console.log("EditRecommendationPage-----values", values);
     const response = await sendAuthPostReq(
       token,
       values,
@@ -40,10 +35,6 @@ const EditRecommendationPage = () => {
     if (response.body.error) {
       handleOpenError(response.body.error);
     } else {
-      console.log(
-        "EditRecommendationPage-----myOnSubmit---responseBody after await",
-        response.body
-      );
       const recommendation = { ...response.body };
       delete recommendation.__v;
       dispatch({
