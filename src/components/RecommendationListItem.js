@@ -48,30 +48,22 @@ const useStyles = makeStyles((theme) => ({
 const RecommendationListItem = ({ recommendation }) => {
   const classes = useStyles();
   const history = useHistory();
-  console.log("RecommendationListItem recommendation:---", recommendation);
   const { user } = useContext(UsersContext);
   const isUserRecommendation = (user && recommendation._creatorId) ? (recommendation._creatorId._id === user._id) : false;
-  console.log("RecommendationListItem---user", user);
-  
-  console.log(
-    "RecommendationListItem---isUserRecommendation",
-    isUserRecommendation
-  );
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handleEdit = () => {
-    console.log("RecommendationListItem handleEdit");
     history.push(`/edit/${recommendation._id}`);
   };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item xs container direction="column" spacing={2}>
+        <Grid container spacing={2} >
+          <Grid item xs container direction="column" spacing={2} xs={12} sm={8}>
             <Typography
               gutterBottom
               variant="subtitle1"
@@ -86,7 +78,7 @@ const RecommendationListItem = ({ recommendation }) => {
               {recommendation.description}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4} >
             <Typography
               variant="subtitle1"
               gutterBottom
