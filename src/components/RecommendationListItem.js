@@ -52,10 +52,7 @@ const RecommendationListItem = ({ recommendation }) => {
   const { user } = useContext(UsersContext);
   const isUserRecommendation = (user && recommendation._creatorId) ? (recommendation._creatorId._id === user._id) : false;
   console.log("RecommendationListItem---user", user);
-  // console.log(
-  //   "RecommendationListItem---recommendation._creatorId._id",
-  //   recommendation._creatorId._id
-  // );
+  
   console.log(
     "RecommendationListItem---isUserRecommendation",
     isUserRecommendation
@@ -89,7 +86,7 @@ const RecommendationListItem = ({ recommendation }) => {
               {recommendation.description}
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={4}>
             <Typography
               variant="subtitle1"
               gutterBottom
