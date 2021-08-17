@@ -30,6 +30,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText="שדה חובה*"
                 raws={1}
                 multiline={false}
+                required={true}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -39,6 +40,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText=""
                 rows={3}
                 multiline={true}
+                required={false}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -48,6 +50,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText="שדה חובה*"
                 rows={1}
                 multiline={false}
+                required={true}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -57,6 +60,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText=""
                 rows={1}
                 multiline={false}
+                required={false}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -66,6 +70,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText=""
                 rows={1}
                 multiline={false}
+                required={false}
               />
             </Grid>
 
@@ -94,6 +99,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText="שדה חובה*"
                 rows={1}
                 multiline={false}
+                required={true}
               />
             </Grid>
             <Grid item xs={12} sm={9}>
@@ -103,6 +109,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
                 helperText=""
                 rows={1}
                 multiline={false}
+                required={false}
               />
             </Grid>
             {
@@ -139,7 +146,7 @@ const RecommendationForm = ({ recommendation, myOnSubmit }) => {
   );
 };
 
-const MyFastField = ({ title, name, helperText, rows, multiline }) => {
+const MyFastField = ({ title, name, helperText, rows, multiline, required }) => {
   return (
     <>
       <label htmlFor="serviceName">{title}</label>
@@ -147,7 +154,7 @@ const MyFastField = ({ title, name, helperText, rows, multiline }) => {
         {({ form }) => (
           <TextField
             fullWidth
-            required
+            required={required}
             id={name}
             name={name}
             type="text"
